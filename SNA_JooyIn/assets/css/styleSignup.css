@@ -13,6 +13,7 @@ body {
 .wrapper {
 	margin: 50px auto;
 	width: 70vw;
+    max-width: 300px;
 	height:auto;
 	background: #fff;
 	-webkit-border-radius: 5px;
@@ -198,7 +199,8 @@ body {
 
 
 .register-switch {
-  height: 32px;
+  height: 24px;
+  width: 38%;
   margin-bottom: 15px;
   padding: 4px;
   background: #6db244;
@@ -218,7 +220,7 @@ body {
 .register-switch-label {
   float: left;
   width: 50%;
-  line-height: 32px;
+  line-height: 24px;
   color: white;
   text-align: center;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.2);
