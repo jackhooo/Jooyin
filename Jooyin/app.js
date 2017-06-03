@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cookieSession = require('cookie-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -15,6 +16,7 @@ var maingroup = require('./routes/maingroup');
 var newgroup = require('./routes/newgroup');
 var signupPage = require('./routes/signupPage');
 var homepage = require('./routes/homepage');
+
 
 // DataBase 
 var mysql = require("mysql");
@@ -36,6 +38,11 @@ con.connect(function(err) {
 
 var app = express();
 
+//啟用cookieSession
+app.use(cookieSession({
+    key: 'node',
+    secret: 'HelloExpressSESSION'
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

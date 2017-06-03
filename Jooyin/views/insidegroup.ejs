@@ -137,7 +137,9 @@
 				<!-- Menu -->
 				<nav id="menu">
 					<header class="major">
-						<h2>Jackie Chen</h2>
+						<% if(nickname && logined) {%>
+						<h2><%= nickname%></h2>
+					<% }%>
 					</header>
 					<img src="images/boy.svg" />
 					<p class="button big" id="percent">100%</p>

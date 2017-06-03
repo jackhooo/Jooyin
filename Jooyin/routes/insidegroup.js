@@ -3,6 +3,9 @@ var router = express.Router();
 var pool = require('./lib/db.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	
+	res.locals.nickname = req.session.nickname;
+	res.locals.logined = req.session.logined ;
   var db = pool;
   var data="";
   var group_user="";

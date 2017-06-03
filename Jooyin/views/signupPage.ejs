@@ -4,103 +4,107 @@
   <meta charset="UTF-8">
   <title>Custom Login Form</title>
   
-    <link rel="stylesheet" href="assets/css/styleSignup.css">
-    <script type="text/javascript" src="js/signup.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" id="UI_CSS"/>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/theme.css" id="THEME_CSS"/>
-    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script>
-      $(function() {
-        $("#datepicker").datepicker({
-                              changeMonth: true,
-                      changeYear: true,
+  <link rel="stylesheet" href="assets/css/styleSignup.css">
+  <script type="text/javascript" src="js/signup.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" id="UI_CSS"/>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/theme.css" id="THEME_CSS"/>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+    $(function() {
+      $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
                       yearRange: '1900:2030', //set the range of years
                       dateFormat: 'dd-mm-yy' //set the format of the date  
 
-        });
-        $(".changeClassName").bind("click", function() {
-          var obj = $(this);
-          var cssFile = obj.data('changecss');
-          $("#UI_CSS").attr("href", "http://code.jquery.com/ui/1.11.4/themes/" + cssFile + '/jquery-ui.css');
-       $("#THEME_CSS").attr("href", "http://code.jquery.com/ui/1.11.4/themes/" + cssFile + '/theme.css');
-          $("#datepicker").focus();
-        });
+                    });
+      $(".changeClassName").bind("click", function() {
+        var obj = $(this);
+        var cssFile = obj.data('changecss');
+        $("#UI_CSS").attr("href", "http://code.jquery.com/ui/1.11.4/themes/" + cssFile + '/jquery-ui.css');
+        $("#THEME_CSS").attr("href", "http://code.jquery.com/ui/1.11.4/themes/" + cssFile + '/theme.css');
+        $("#datepicker").focus();
       });
-    </script>
-     
+    });
+  </script>
+
 </head>
 
 <body>
   <div class="wrapper">
-	<div class="join">快速註冊</div>
-      <div class="clr"></div>
+   <div class="join">快速註冊</div>
+   <div class="clr"></div>
 
-            <div class="forms">
-                <form action="" method="get" name="register";>
-                        <div class="register-switch">
-                          <input type="radio" name="sex" value="F" size="30" id="sex_f" class="register-switch-input" checked>
-                          <label for="sex_f" class="register-switch-label">女孩</label>
-                          <input type="radio" name="sex" value="M" id="sex_m" class="register-switch-input">
-                          <label for="sex_m" class="register-switch-label">男孩</label>
-                        </div>                   
+   <div class="forms">
+    <form action="/signupPage" method="post" name="register";>
+    <% if(error){ %>
+        <%= error%>
+        <% } %>
+      <div class="register-switch">
 
-                        <input name="email" type="text" size="30" placeholder="輸入email" onClick="border: 1px solid #30a8da;" id="mail"><br>
-                        <input name="email" type="text" size="30" placeholder="暱稱" onClick="border: 1px solid #30a8da;" id="name"><br>   
-                        <input type="text" id="datepicker" size="30" placeholder="生日" href="javascript:void(0);" class="changeClassName" data-changecss="hot-sneaks"><br>
-                        <input name="password" type="password" size="30" placeholder="密碼(6位以上英數字混合)" onClick="border: 1px solid #30a8da;" id="password" onchange="codeCheck(this);"><br>
-                        <input name="password2" type="password" size="30" placeholder="再次輸入密碼" onClick="border: 1px solid #30a8da;" id="password2" onchange="codeAgain(this);"><br>
-                        <div id="codeCheck" style="color:#cc0000;visibility:hidden;">兩次密碼不一致！請重新輸入</div>
+        <input type="radio" name="sex" value="F" size="30" id="sex_f" class="register-switch-input" checked>
+        <label for="sex_f" class="register-switch-label">女孩</label>
+        <input type="radio" name="sex" value="M" id="sex_m" class="register-switch-input">
+        <label for="sex_m" class="register-switch-label">男孩</label>
+      </div>                   
 
-
-                        <!--驗證二次輸入密碼                 -->
-                        <script type = "text/javascript">
-                            function codeAgain(inp) {
-                                var pwd1 = document.getElementById("password");
-                                var cdC1 = document.getElementById("codeCheck");
-                                if(inp.value !== pwd1.value) {
-                                    cdC1.style.visibility = "visible";
-                                    password2.value = "";
-                                    inp.focus();
-                                }
-                                else
-                                cdC1.style.visibility="hidden";
-                            }
-                        </script>
-
-                        <!--    驗證密碼-->
-                        <script>
-                                function codeCheck() {
-                                  var re = /[a-zA-Z0-9]{6,}/g;
-                                  var val = document.getElementById("password").value;
-                                  var result = re.exec(val);
-                                    console.log(result);
-                                  if(result == null || result != val || val.search(/[0-9]/g) == -1 || val.search(/[a-zA-Z]/g) == -1) {
-                                    alert("密碼輸入錯誤,必須6位數以上並包含英文和數字!!");
-                                    return false;
-                                  }
-                                  return true;
-                                }
-                        </script>
+      <input name="email" type="email" size="30" placeholder="輸入email" onClick="border: 1px solid #30a8da;" id="mail"><br>
+      <input name="nickname" type="text" size="30" placeholder="暱稱" onClick="border: 1px solid #30a8da;" id="name"><br>   
+      <input name="birthday" type="text" id="datepicker" size="30" placeholder="生日" href="javascript:void(0);" class="changeClassName" data-changecss="hot-sneaks"><br>
+      <input name="password" type="password" size="30" placeholder="密碼(6位以上英數字混合)" onClick="border: 1px solid #30a8da;" id="password" onchange="codeCheck(this);"><br>
+      <input name="password2" type="password" size="30" placeholder="再次輸入密碼" onClick="border: 1px solid #30a8da;" id="password2" onchange="codeAgain(this);"><br>
+      <div id="codeCheck" style="color:#cc0000;visibility:hidden;">兩次密碼不一致！請重新輸入</div>
 
 
+      <!--驗證二次輸入密碼                 -->
+      <script type = "text/javascript">
+        function codeAgain(inp) {
+          var pwd1 = document.getElementById("password");
+          var cdC1 = document.getElementById("codeCheck");
+          if(inp.value !== pwd1.value) {
+            cdC1.style.visibility = "visible";
+            password2.value = "";
+            inp.focus();
+          }
+          else
+            cdC1.style.visibility="hidden";
+        }
+      </script>
 
-                </form>
-                <input class="remember-checkbox"type="checkbox">
-                <p class="remember-p">記住我</p>
-            </div>
-            <a class="create-acc" href="maingroup">註冊</a>
+      <!--    驗證密碼-->
+      <script>
+        function codeCheck() {
+          var re = /[a-zA-Z0-9]{6,}/g;
+          var val = document.getElementById("password").value;
+          var result = re.exec(val);
+          console.log(result);
+          if(result == null || result != val || val.search(/[0-9]/g) == -1 || val.search(/[a-zA-Z]/g) == -1) {
+            alert("密碼輸入錯誤,必須6位數以上並包含英文和數字!!");
+            return false;
+          }
+          return true;
+        }
+      </script>
 
-            <div class="clr"><hr/></div>
-
-            <div class="login-options">使用facebook帳號快速登入</div>
-            <a class="facebook" href="#">Facebook</a>
 
 
-      
+
+      <input class="remember-checkbox"type="checkbox">
+      <p class="remember-p">記住我</p>
+    </div>
+    <input type="submit" class="create-acc" value="註冊"/>
+  </form>
+  <div class="clr"><hr/></div>
+
+  <div class="login-options">使用facebook帳號快速登入</div>
+  <a class="facebook" href="#">Facebook</a>
+
+
+
 </div>
-  
+
 
 </body>
 </html>

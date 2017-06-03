@@ -48,8 +48,7 @@ router.post('/creatgroup', function(req, res, next) {
 		        var data = rows2;
 		        console.log(data);
 		        var sql2 = {
-		        		user_name : "Jacky",
-		        		group_name : req.body.group_name,
+		        		user_name : req.session.nickname,
 		        		group_id : data[0].id,
 		        	};
 		        var qur = db.query('INSERT INTO group_with_user SET ?', sql2, function(err, rows3) {

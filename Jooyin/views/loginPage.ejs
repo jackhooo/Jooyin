@@ -17,6 +17,9 @@
 <body>
   <div class="wrapper">
     <div class="join">登入JooyIn</div>
+    <% if(error){ %>
+    <%= error%>
+    <% } %>
     <div class="clr"></div>
 
     <form method="post" action="/loginPage">
