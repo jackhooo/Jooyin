@@ -19,7 +19,6 @@ router.post('/', function(req, res, next) {
             console.log(err);
         }
         var data1 = rows1;
-        	
         if(rows1.length !== 0){
         	res.locals.error = '此email已經被註冊過!!';
         	res.render('signupPage');
@@ -32,28 +31,19 @@ router.post('/', function(req, res, next) {
         			birthday : req.body.birthday,
         			password : req.body.password
         		};
-
         		var qur = db.query('INSERT INTO ac_basic SET ?', sql, function(err, rows) {
         			if (err) {
         				console.log(err);
         			}
-
         			req.session.email = req.body.email;
         			req.session.nickname = req.body.nickname;
         			req.session.password = req.body.password;
         			req.session.logined = true;
-
         			res.setHeader('Content-Type', 'application/json');
         			res.redirect('../maingroup');
-
         		});
         }
-        
     });
-	
-	
-	
-
 });
 
 module.exports = router;

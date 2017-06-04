@@ -27,28 +27,28 @@
 						<li><a href="#" class=""><span class="label">揪團</span></a></li>
 						<li><a href="#" class=""><span class="label">個人資訊</span></a></li>
 						<% if(nickname && logined) {%>
-						<li><a href="/loginPage/signout" class=""><span class="label">登出</span></a></li>
-						<% }else {%>
-						<li><a href="loginPage" class=""><span class="label">登入</span></a></li>
-						<% } %>
+							<li><a href="/loginPage/signout" class="" ><span class="label">登出</span></a></li>
+							<% }else {%>
+								<li><a href="loginPage" class=""><span class="label">登入</span></a></li>
+								<% } %>
 					</ul>
 				</header>
 				<!-- Banner -->
 				<% if(page==1) {%>
-				<section id="banner">
-				
-					<div class="content">
-						<header>
-							<h1><br>新增揪團</h1>
-							<p>想運動卻找不到夥伴嗎？<br> 點擊加號輸入運動、地點和時間，馬上揪運吧！
-							</p>
-						</header>
-						<p></p>
-						<ul class="actions">
-							<li><a href="homePage" class="button big">Learn More</a></li>
-						</ul>
-					</div>
-					<span class="image object">
+					<section id="banner">
+
+						<div class="content">
+							<header>
+								<h1><br>新增揪團</h1>
+								<p>想運動卻找不到夥伴嗎？<br> 點擊加號輸入運動、地點和時間，馬上揪運吧！
+								</p>
+							</header>
+							<p></p>
+							<ul class="actions">
+								<li><a href="homePage" class="button big">Learn More</a></li>
+							</ul>
+						</div>
+						<span class="image object">
 							<a href="newgroup"><img src="images/add2.png" alt="" /></a>
 					<span>
 					
@@ -79,16 +79,24 @@
 				</section>
 				<ul class="pagination">
 					<li><span class="button disabled">Prev</span></li>
-					<% for ( var i = 1  ; i <datalength/4 + 1 ; i++){ %>					
-					<% if(i == page) {%>
-					<li><a href="/maingroup?page=<%= i %>" class="page active"><%= i %></a></li>
-					<% }else{ %>
-					<li><a href="/maingroup?page=<%= i %>" class="page"><%= i %></a></li>
-					<% } %>
-					
-					<% } %>
-					<li><a href="#" class="button">Next</a></li>
-					<!-- </ul>         -->
+						<% for ( var i = 1  ; i <datalength/4 + 1 ; i++){ %>
+							<% if(i == page) {%>
+								<li>
+									<a href="/maingroup?page=<%= i %>" class="page active">
+										<%= i %>
+									</a>
+								</li>
+								<% }else{ %>
+									<li>
+										<a href="/maingroup?page=<%= i %>" class="page">
+											<%= i %>
+										</a>
+									</li>
+									<% } %>
+
+										<% } %>
+											<li><a href="#" class="button">Next</a></li>
+											<!-- </ul>         -->
 			</div>
 
 			<hr>
@@ -114,9 +122,11 @@
 			<div class="inner">
 				<nav id="menu">
 					<header class="major">
-					<% if(nickname && logined) {%>
-						<h2><%= nickname%></h2>
-					<% }%>
+						<% if(nickname && logined) {%>
+							<h2>
+								<%= nickname%>
+							</h2>
+							<% }%>
 					</header>
 					<img src="images/boy.svg" />
 					<p class="button big" id="percent">100%</p>
@@ -207,4 +217,5 @@
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
 </body>
+
 </html>
