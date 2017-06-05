@@ -5,7 +5,31 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
+	
+	 <style type="text/css">
+   #map {
+    height: 300px;
+  }
+</style>
+	<script>
+      function initMap() {
+        var uluru = {lat: <%= data[0].position_lat%>, lng: <%= data[0].position_lng %>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBnXcXIxzWVRLkd0MNuwsUI0eLG--QBYI&callback=initMap">
+    </script>
+
 </head>
+
 
 <body>
 
@@ -68,172 +92,175 @@
 						<div class="8u 12u$(small)" id="memberphoto">
 							<h2 id="sportstyle">-參加成員-</h2>
 							<div class="row ">
-									<% for ( var i = 0  ; i <data.length ; i++){ %>
-										<div class="2u 12u$(small)">
-											<a href="" class=""><img src="images/boy.svg" alt="" /></a>
-										</div>
-										<h3><%= data[i].user_name  %></h3>
-									<% } %>
+								<% for ( var i = 0  ; i <data.length ; i++){ %>
+								<div class="2u 12u$(small)">
+									<a href="" class=""><img src="images/boy.svg" alt="" /></a>
+								</div>
+								<h3><%= data[i].user_name  %></h3>
+								<% } %>
 
 							</div>
 						</div>
 						<div class="4u 12u$(small)">
-
+						
 							<div class="row">
 								<div class="6u 12u$(small)">
 									<h3><%= data[0].group_name  %></h3>
 									<h4><%= data[0].start_datetime  %></h3>
-									<h4><%= data[0].end_datetime  %></h3>
+										<h4><%= data[0].end_datetime  %></h3>zz
+										</div>
+										<div class="6u 12u$(small)">
+											<ul class="actions">
+												<li><a href="#" class="button special">分享活動</a></li>
+												<li><br></li>
+												<li><a href="maingroup" class="button">離開揪團</a></li>
+											</ul>
+										</div>
+									</div>
+									<div id="map"></div>
 								</div>
-								<div class="6u 12u$(small)">
-									<ul class="actions">
-										<li><a href="#" class="button special">分享活動</a></li>
-										<li><br></li>
-										<li><a href="maingroup" class="button">離開揪團</a></li>
-									</ul>
-								</div>
+
 							</div>
+
+
 						</div>
-					</div>
+						<!--box-->
+						<!--Chat Message Box-->
+						<div class="12u$">
+							<textarea name="demo-message" id="demo-message" rows="6" readonly="value"></textarea>
+						</div><br>
+						<!--Meaasge Send Box-->
+						<div class="12u$">
+							<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="2"></textarea>
+						</div><br>
+						<!--Meaasge Button-->
+						<div class="12u$">
+							<ul class="actions">
+								<li><input type="submit" value="Send Message" class="special" /></li>
+								<li><input type="reset" value="Reset" /></li>
+							</ul>
+						</div>
+						<hr>
 
+
+						<footer id="footer">
+							<h3 id="icons">聯絡我們</h3>
+							<p id="icons"> Email:XXXXXXXXX@nccu.edu.tw Tel:XX-XXXXXXXX 地址：政治大學大仁樓</p>
+							<ul class="icons" id="icons">
+								<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+							</ul>
+						</footer>
+
+
+					</div>
 				</div>
-				<!--box-->
-				<!--Chat Message Box-->
-				<div class="12u$">
-					<textarea name="demo-message" id="demo-message" rows="6" readonly="value"></textarea>
-				</div><br>
-				<!--Meaasge Send Box-->
-				<div class="12u$">
-					<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="2"></textarea>
-				</div><br>
-				<!--Meaasge Button-->
-				<div class="12u$">
-					<ul class="actions">
-						<li><input type="submit" value="Send Message" class="special" /></li>
-						<li><input type="reset" value="Reset" /></li>
-					</ul>
+
+				<!-- 側欄 -->
+				<div id="sidebar">
+					<div class="inner">
+					
+						<!-- Menu -->
+						<nav id="menu">
+							<header class="major">
+								<% if(nickname && logined) {%>
+								<h2><%= nickname%></h2>
+								<% }%>
+							</header>
+							<img src="images/boy.svg" />
+							<p class="button big" id="percent">100%</p>
+							<p class="button big" id="completetimes">34場</p>
+							<br>
+							<div class="box" id="futuregroup">
+								<p>下個揪運：明天下午三點 河堤籃球場</p>
+							</div>
+
+							<div class="6u$ 12u$(small)">
+								<ul class="actions vertical small" id="logout">
+									<li><a href="#" class="button special small">登出</a></li>
+								</ul>
+							</div>
+						</nav>
+
+						<section>
+							<header class="major">
+								<h2>揪團選項</h2>
+							</header>
+							<div class="12u 12u$(small)">
+								<input type="checkbox" id="interest" name="interest">
+								<label for="interest">根據我喜愛的運動</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="all" name="all">
+								<label for="all">全部</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="workout" name="workout">
+								<label for="workout">健身</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="basketball" name="basketball">
+								<label for="basketball">籃球</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="vollyball" name="vollyball">
+								<label for="vollyball">排球</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="swim" name="swim">
+								<label for="swim">游泳</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="jog" name="jog">
+								<label for="jog">慢跑</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="yoga" name="yoga">
+								<label for="yoga">瑜珈</label>
+							</div>
+							<div class="6u 12u$(small)">
+								<input type="checkbox" id="bike" name="bike">
+								<label for="bike">腳踏車</label>
+							</div>
+							<div class="3u 12u$(small)">
+								<input type="checkbox" id="other" name="other">
+								<label for="other">其他</label>
+							</div>
+						</section>
+
+						<section>
+							<header class="major">
+								<h2>我參加的團</h2>
+							</header>
+							<div class="mini-posts">
+								<article>
+									<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
+									<p>____揪團資訊____</p>
+								</article>
+								<article>
+									<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
+									<p>____揪團資訊____</p>
+								</article>
+								<article>
+									<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+									<p>____揪團資訊____</p>
+								</article>
+							</div>
+							<ul class="actions">
+								<li><a href="#" class="button">More</a></li>
+							</ul>
+						</section>
+					</div>
 				</div>
-				<hr>
-
-
-				<footer id="footer">
-					<h3 id="icons">聯絡我們</h3>
-					<p id="icons"> Email:XXXXXXXXX@nccu.edu.tw Tel:XX-XXXXXXXX 地址：政治大學大仁樓</p>
-					<ul class="icons" id="icons">
-						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-					</ul>
-				</footer>
-
-
 			</div>
-		</div>
 
-		<!-- 側欄 -->
-		<div id="sidebar">
-			<div class="inner">
+			<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 
-				<!-- Menu -->
-				<nav id="menu">
-					<header class="major">
-						<% if(nickname && logined) {%>
-						<h2><%= nickname%></h2>
-					<% }%>
-					</header>
-					<img src="images/boy.svg" />
-					<p class="button big" id="percent">100%</p>
-					<p class="button big" id="completetimes">34場</p>
-					<br>
-					<div class="box" id="futuregroup">
-						<p>下個揪運：明天下午三點 河堤籃球場</p>
-					</div>
+		</body>
 
-					<div class="6u$ 12u$(small)">
-						<ul class="actions vertical small" id="logout">
-							<li><a href="#" class="button special small">登出</a></li>
-						</ul>
-					</div>
-				</nav>
-
-				<section>
-					<header class="major">
-						<h2>揪團選項</h2>
-					</header>
-					<div class="12u 12u$(small)">
-						<input type="checkbox" id="interest" name="interest">
-						<label for="interest">根據我喜愛的運動</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="all" name="all">
-						<label for="all">全部</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="workout" name="workout">
-						<label for="workout">健身</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="basketball" name="basketball">
-						<label for="basketball">籃球</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="vollyball" name="vollyball">
-						<label for="vollyball">排球</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="swim" name="swim">
-						<label for="swim">游泳</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="jog" name="jog">
-						<label for="jog">慢跑</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="yoga" name="yoga">
-						<label for="yoga">瑜珈</label>
-					</div>
-					<div class="6u 12u$(small)">
-						<input type="checkbox" id="bike" name="bike">
-						<label for="bike">腳踏車</label>
-					</div>
-					<div class="3u 12u$(small)">
-						<input type="checkbox" id="other" name="other">
-						<label for="other">其他</label>
-					</div>
-				</section>
-
-				<section>
-					<header class="major">
-						<h2>我參加的團</h2>
-					</header>
-					<div class="mini-posts">
-						<article>
-							<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-							<p>____揪團資訊____</p>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-							<p>____揪團資訊____</p>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-							<p>____揪團資訊____</p>
-						</article>
-					</div>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</section>
-			</div>
-		</div>
-	</div>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
-</body>
-
-</html>
+		</html>

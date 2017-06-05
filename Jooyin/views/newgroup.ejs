@@ -10,25 +10,184 @@
   <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
   <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
-  <script language="javascript">
-    function Check()  
-    {
+  <!-- Replace the value of the key parameter with your own API key. -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBnXcXIxzWVRLkd0MNuwsUI0eLG--QBYI"></script>
+
+  <style type="text/css">
+   #map {
+    height: 300px;
+  }
+</style>
+
+<script language="javascript">
+
+  function Check()  
+  {
     if (document.send.start_date.value=="" && document.send.start_time.value=="")
     {
-        alert('請輸入完整起始時間!');
-        return false;
+      alert('請輸入完整起始時間!');
+      return false;
     }
     if (document.send.end_date.value=="" && document.send.end_time.value=="")
     {
-        alert('請輸入完整結束時間!');
-        return false;
+      alert('請輸入完整結束時間!');
+      return false;
     }
     
-    return true;
+    console.log(markers[0].position.lat());
+      console.log(markers[0].position.lng());
+      
+      $.ajax({
+        url: "/newgroup/creatgroup",
+        type: "POST",
+        dateType: 'html',
+        data: {  
+          position_lat: markers[0].position.lat(),
+           position_lng: markers[0].position.lng(),
+           group_name: document.send.group_name.value,
+          start_date: document.send.start_date.value,
+           end_date: document.send.end_date.value,
+          start_time: document.send.start_time.value,
+           end_time: document.send.end_time.value,
+          sports_category: document.send.sports_category.value,
+           group_people: document.send.group_people.value,
+          group_location: document.send.group_location.value,
+           detail: document.send.detail.value,
+           },
+      });
+
+      
+    window.location.href = "maingroup";
+    return true;   
+  }
+
+// In the following example, markers appear when the user clicks on the map.
+// Each marker is labeled with a single alphabetical character.
+var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var labelIndex = 0;
+var map, geocoder, popup;
+
+function initialize() {
+  var bangalore = { lat: 12.97, lng: 77.59 };
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 16,
+    center: bangalore
+  });
+
+  var infoWindow = new google.maps.InfoWindow({map: map});
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('Location found.');
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+
+  // This event listener calls addMarker() when the map is clicked.
+  google.maps.event.addListener(map, 'click', function(event) {
+    addMarker(event.latLng, map);
+  });
+
+
+
+
+  // Add a marker at the center of the map.
+  //addMarker(bangalore, map);
 }
-</script>
+
+var markers = [];
+
+function Submit() {
+      console.log(markers[0].position.lat());
+      console.log(markers[0].position.lng());
+      
+      $.ajax({
+        url: "/newgroup/creatgroup",
+        type: "POST",
+        dateType: 'html',
+        data: {  
+          position_lat: markers[0].position.lat(),
+           position_lng: markers[0].position.lng(),
+           group_name: document.send.group_name.value,
+          start_date: document.send.start_date.value,
+           end_date: document.send.end_date.value,
+          start_time: document.send.start_time.value,
+           end_time: document.send.end_time.value,
+          sports_category: document.send.sports_category.value,
+           group_people: document.send.group_people.value,
+          group_location: document.send.group_location.value,
+           detail: document.send.detail.value,
+           },
+      });
+
+      window.location.href = "maingroup";
+    }
+
+// Adds a marker to the map.
+function addMarker(location, map) {
+  geocoder = new google.maps.Geocoder();
+  
+    console.log(location.lat());
+  // Add the marker at the clicked location, and add the next-available label
+  // from the array of alphabetical characters.
+  var marker = new google.maps.Marker({
+    position: location,
+    label: labels[labelIndex++ % labels.length],
+    map: map,
+    draggable:true,
+    title:"Drag me!"
+  })
+
+  markers.push(marker);
+  // 將經緯度透過 Google map API 反查地址
+  
+
+  // geocoder.geocode({
+  //   'latLng': location
+  // }, function(results, status) {
+  //   if (status == google.maps.GeocoderStatus.OK) {
+  //     if (results) {
+  //       showAddressOfResult(results[0], marker);
+  //     }
+  //   } else {
+  //     alert("Reverse Geocoding failed because: " + status);
+  //   }
+  // });
+
+};
+
+    // 設定 marker 的訊息泡泡
+
+    // function showAddressOfResult(result, marker) {
+    //   popup = new google.maps.InfoWindow();
+    //  // map.setCenter(marker.getPosition());
+
+    //   var popupContent = '<b>地址: </b> ' + result.formatted_address;
+    //   popup.setContent(popupContent);
+    //   popup.open(map, marker);
+    // }
+
+
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+  </script>
 </head>
 <body>
+
 
   <!-- Wrapper -->
   <div id="wrapper">
@@ -43,136 +202,137 @@
 
          <!-- Search -->
          <section id="search" class="alt">
-            <form method="post" action="#">
-              <input type="text" name="query" id="query" placeholder="Search" />
+          <form method="post" action="#">
+            <input type="text" name="query" id="query" placeholder="Search" />
           </form>
-      </section>
+        </section>
 
-      <ul class="icons">
+        <ul class="icons">
           <li><a href="maingroup" class=""><span class="label">揪團</span></a></li>
           <li><a href="#" class=""><span class="label">個人資訊</span></a></li>
           <li><a href="loginPage" class=""><span class="label">登入</span></a></li>
-      </ul>
-  </header>
+        </ul>
+      </header>
 
 
-  <br>
+      <br>
 
 
 
-  <h2>新增揪團</h2>
-  <form method="post" action="/newgroup/creatgroup"  onSubmit="return Check()" name="send">
-    <div class="6u 12u$(xsmall)">
-        <input type="text" name="group_name" id="group_name" value="" placeholder="揪團名稱" />
+      <h2>新增揪團</h2>
+      <form method="post" action="/newgroup/creatgroup"  onSubmit="return Check()" name="send">
+        <div class="6u 12u$(xsmall)">
+          <input type="text" name="group_name" id="group_name" value="" placeholder="揪團名稱" />
+        </div>
+        <br>
+        <div class="3u 12u$(xsmall)">
+
+
+
+        </div>
+
+        <div class="row">
+
+          <p>揪團時間</p>
+          <div class="3u 12u$(xsmall)">
+           <input type="date" id="bookdate" min="2017-06-02" max="2020-12-31" name="start_date" id="start_date">                                           
+         </div>
+
+         <div class="3u 12u$(xsmall)">                                           
+           <input type="time" id="booktime" name="start_time" id="start_time">
+         </div>
+
+
+       </div>
+       <br>
+
+       <div class="row">
+
+        <p>結束時間</p>
+        <div class="3u 12u$(xsmall)">
+         <input type="date" id="bookdate" min="2017-06-02" max="2020-12-31" name="end_date" id="end_date">                                           
+       </div>
+
+       <div class="3u 12u$(xsmall)">                                           
+         <input type="time" id="booktime" name="end_time" id="end_time">
+       </div>
+     </div>
+
+
+     <br>
+
+     <!-- Break -->
+     <div class="6u 12u$">
+      <div class="select-wrapper">
+        <select name="sports_category" id="sports_category">
+          <option value="">- 運動類型 -</option>
+          <option value="健身">健身</option>
+          <option value="籃球">籃球</option>
+          <option value="排球">排球</option>
+          <option value="游泳">游泳</option>
+          <option value="慢跑">慢跑</option>
+          <option value="瑜珈">瑜珈</option>
+          <option value="腳踏車">腳踏車</option>
+          <option value="其他">其他</option>
+        </select>
+      </div>
     </div>
-    <br>
+    <br>   
+
     <div class="3u 12u$(xsmall)">
 
+      <input type="text" name="group_people" id="group_people" value="" placeholder="揪團人數" />
+    </div>
+    <br>   
 
+    <div class="3u 12u$(xsmall)">
+      <input type="text" name="group_location" id="group_location" value="" placeholder="揪團地點" />
+    </div>     
 
+    <br>
+    <div class="6u$ 12u$(xsmall)">
+      <textarea type="text" name="detail" id="detail" value="" placeholder="詳細資訊"  ></textarea>
+    </div>
+    <br>
+    <!-- Break -->
+    <div id="map"></div>
+    <div class="row uniform">
+     <!-- Break -->
+     <div class="6u 12u$(small)">
+      <input type="checkbox" id="i_know" name="i_know">
+      <label for="i_know">我會遵守揪團規定</label>
     </div>
 
-    <div class="row">
-
-        <p>揪團時間</p>
-        <div class="3u 12u$(xsmall)">
-           <input type="date" id="bookdate" min="2017-06-02" max="2020-12-31" name="start_date" id="start_date">                                           
-       </div>
-
-       <div class="3u 12u$(xsmall)">                                           
-           <input type="time" id="booktime" name="start_time" id="start_time">
-       </div>
+    <div class="6u$ 12u$(small)">
+      <input type="checkbox" id="human" name="human">
+      <label for="human">我不是機器人</label>
+    </div>
 
 
+    <!-- Break -->
+    <div class="12u$">
+      <ul class="actions">
+       <li><input type="submit" value="新增揪團"  class="special" /></li>
+       <li><input type="reset" value="清除" /></li>
+     </ul>
    </div>
-   <br>
-
-   <div class="row">
-
-    <p>結束時間</p>
-        <div class="3u 12u$(xsmall)">
-           <input type="date" id="bookdate" min="2017-06-02" max="2020-12-31" name="end_date" id="end_date">                                           
-       </div>
-
-       <div class="3u 12u$(xsmall)">                                           
-           <input type="time" id="booktime" name="end_time" id="end_time">
-       </div>
-    </div>
-
-
-<br>
-
-<!-- Break -->
-<div class="6u 12u$">
-    <div class="select-wrapper">
-        <select name="sports_category" id="sports_category">
-            <option value="">- 運動類型 -</option>
-            <option value="健身">健身</option>
-            <option value="籃球">籃球</option>
-            <option value="排球">排球</option>
-            <option value="游泳">游泳</option>
-            <option value="慢跑">慢跑</option>
-            <option value="瑜珈">瑜珈</option>
-            <option value="腳踏車">腳踏車</option>
-            <option value="其他">其他</option>
-        </select>
-    </div>
-</div>
-<br>   
-
-<div class="3u 12u$(xsmall)">
-    <input type="text" name="group_people" id="group_people" value="" placeholder="揪團人數" />
-</div>
-<br>   
-
-<div class="3u 12u$(xsmall)">
-    <input type="text" name="group_location" id="group_location" value="" placeholder="揪團地點" />
-</div>     
-
-<br>
-<div class="6u$ 12u$(xsmall)">
-    <textarea type="text" name="detail" id="detail" value="" placeholder="詳細資訊"  ></textarea>
-</div>
-<br>
-<!-- Break -->
-<div class="row uniform">
-
-
-   <!-- Break -->
-   <div class="6u 12u$(small)">
-    <input type="checkbox" id="i_know" name="i_know">
-    <label for="i_know">我會遵守揪團規定</label>
-</div>
-
-<div class="6u$ 12u$(small)">
-    <input type="checkbox" id="human" name="human">
-    <label for="human">我不是機器人</label>
-</div>
-
-
-<!-- Break -->
-<div class="12u$">
-    <ul class="actions">
-     <li><input type="submit" value="新增揪團" class="special" /></li>
-     <li><input type="reset" value="清除" /></li>
- </ul>
-</div>
-</div>
+ </div>
 </form>
+<button class="Submit" onclick="Check()">Submit</button>
+
 <hr>
 
 <footer id="footer" >
 
-    <h3 id="icons">聯絡我們</h3>
-    <p id="icons">  Email:XXXXXXXXX@nccu.edu.tw  Tel:XX-XXXXXXXX  地址：政治大學大仁樓</p>
+  <h3 id="icons">聯絡我們</h3>
+  <p id="icons">  Email:XXXXXXXXX@nccu.edu.tw  Tel:XX-XXXXXXXX  地址：政治大學大仁樓</p>
 
-    <ul  class="icons" id="icons">
-        <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>		
-    </ul>
+  <ul  class="icons" id="icons">
+    <li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+    <li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+    <li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>		
+  </ul>
 </footer>
-
 
 
 
@@ -183,6 +343,8 @@
 
 <!-- 側欄 -->
 <div id="sidebar">
+
+
   <div class="inner">
 
    <!-- Menu -->
@@ -190,67 +352,67 @@
 
      <header class="major">
       <h2>Jackie Chen</h2>    
-  </header>
+    </header>
 
-  <img src="images/boy.svg" />
-  <p  class="button big" id="percent">100%</p>
-  <p  class="button big" id="completetimes">34場</p>
-  <br>
-  <div class="box" id="futuregroup">
-    <p>下個揪運：明天下午三點 河堤籃球場</p>
-</div>
+    <img src="images/boy.svg" />
+    <p  class="button big" id="percent">100%</p>
+    <p  class="button big" id="completetimes">34場</p>
+    <br>
+    <div class="box" id="futuregroup">
+      <p>下個揪運：明天下午三點 河堤籃球場</p>
+    </div>
 
-<div class="6u$ 12u$(small)">
-    <ul class="actions vertical small" id="logout">
+    <div class="6u$ 12u$(small)">
+      <ul class="actions vertical small" id="logout">
         <li><a href="#" class="button special small">登出</a></li>
-    </ul>
-</div>
-</nav>
+      </ul>
+    </div>
+  </nav>
 
-<section>
- <header class="major">
-  <h2>揪團選項</h2>
-</header>
-<div class="12u 12u$(small)">
+  <section>
+   <header class="major">
+    <h2>揪團選項</h2>
+  </header>
+  <div class="12u 12u$(small)">
     <input type="checkbox" id="interest" name="interest">
     <label for="interest">根據我喜愛的運動</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="all" name="all">
     <label for="all">全部</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="workout" name="workout">
     <label for="workout">健身</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="basketball" name="basketball">
     <label for="basketball">籃球</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="vollyball" name="vollyball">
     <label for="vollyball">排球</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="swim" name="swim">
     <label for="swim">游泳</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="jog" name="jog">
     <label for="jog">慢跑</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="yoga" name="yoga">
     <label for="yoga">瑜珈</label>
-</div>
-<div class="6u 12u$(small)">
+  </div>
+  <div class="6u 12u$(small)">
     <input type="checkbox" id="bike" name="bike">
     <label for="bike">腳踏車</label>
-</div>
-<div class="3u 12u$(small)">
+  </div>
+  <div class="3u 12u$(small)">
     <input type="checkbox" id="other" name="other">
     <label for="other">其他</label>
-</div>
+  </div>
 </section>
 
 <!-- Section -->
@@ -262,15 +424,15 @@
   <article>
    <a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
    <p>____揪團資訊____</p>
-</article>
-<article>
+ </article>
+ <article>
    <a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
    <p>____揪團資訊____</p>
-</article>
-<article>
+ </article>
+ <article>
    <a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
    <p>____揪團資訊____</p>
-</article>
+ </article>
 </div>
 <ul class="actions">
   <li><a href="#" class="button">More</a></li>

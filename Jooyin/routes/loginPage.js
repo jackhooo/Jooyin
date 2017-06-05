@@ -83,7 +83,7 @@ router.post('/', function (req, res, next) {
 /* 使用者登出頁面. */
 router.get('/signout', function (req, res, next) {
   req.session.logined = false;
-  res.redirect('../loginPage');
+  res.redirect('../homepage');
   res.end();
 });
 

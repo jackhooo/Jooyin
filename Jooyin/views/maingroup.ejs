@@ -70,7 +70,7 @@
 								<p>起始時間:<%= data[i].start_datetime  %></p>
 								<p>結束時間:<%= data[i].end_datetime  %></p>
 								<ul class="actions">
-									<li><a href="/insidegroup?group_id=<%= data[i].id %>" class="button">Join!</a></li>
+									<li><a href="/insidegroup/join?group_id=<%= data[i].id %>" class="button">Join!</a></li>
 									<li><a href="/insidegroup?group_id=<%= data[i].id %>" class="button">Save</a></li>
 								</ul>
 							</article>
@@ -137,7 +137,7 @@
 					</div>
 					<div class="6u$ 12u$(small)">
 						<ul class="actions vertical small" id="logout">
-							<li><a href="homePage" class="button special small">登出</a></li>
+							<li><a href="/loginPage/signout" class="button special small">登出</a></li>
 						</ul>
 					</div>
 				</nav>
