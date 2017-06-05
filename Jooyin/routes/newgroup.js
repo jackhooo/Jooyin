@@ -14,6 +14,7 @@ router.post('/creatgroup', function(req, res, next) {
 	console.log(req.body);
 	var db = pool;
 	var sql = {
+		formatted_address: req.body.formatted_address,
 		group_name : req.body.group_name,
 		start_datetime : req.body.start_date + " " + req.body.start_time,
 		end_datetime : req.body.end_date + " " + req.body.end_time,
