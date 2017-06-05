@@ -16,7 +16,7 @@ router.post('/', function (req, res, next) {
   //console.log(req.body.isFb);
   var db = pool;
   //var data = "";
-  if (isFb == null) {
+  if (isFb != true ) {
     //console.log("hi");
     var userName = req.body.email;
     var filter = "";
@@ -49,7 +49,7 @@ router.post('/', function (req, res, next) {
     });
   }
   else {
-    //console.log("hi");
+    console.log(req.body.cname);
     var userid = req.body.uid;
     var filter = "";
     if (userid) { filter = 'WHERE email = ?'; }
