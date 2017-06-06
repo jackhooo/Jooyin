@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var pool = require('./lib/db.js');
 /* GET home page. */
+
+
 router.get('/', function(req, res, next) {
 	
 	res.locals.nickname = req.session.nickname;
@@ -15,23 +17,42 @@ router.get('/', function(req, res, next) {
 	
 	var db = pool;
 	var data = "";
+	var datalength;
+	var myGroup_data = "";
+
 	db.query('SELECT * FROM agroup ORDER By id desc', function(err, rows) {
+
 		if (err) {
 			console.log(err);
 		}
-		var datalength = rows.length;
-		// console.log(datalength);
-		var data = rows;
+		datalength = rows.length;
+		data = rows;
 		data.splice(0, (page - 1) * 4);
 		data.splice(4, Number.MAX_VALUE);
 
-		// console.log(data);
-		res.render('maingroup', {
-			data : data,
-			datalength : datalength,
-			page : page
+		
+		db.query('SELECT * FROM group_with_user, agroup WHERE group_with_user.user_name = ? and group_with_user.group_id = agroup.id', res.locals.nickname, function(err, rows) {
+
+			if (err) {
+				console.log(err);
+			}
+			myGroup_data = rows;
+
+			console.log(myGroup_data);
+
+
+			res.render('maingroup', {
+				data : data,
+				datalength : datalength,
+				page : page,
+				myGroup_data : myGroup_data
+			});
 		});
 	});
+
+
+
+
 });
 
 
