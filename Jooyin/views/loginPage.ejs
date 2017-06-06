@@ -40,6 +40,7 @@
     function testAPI() {
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function (response) {
+        window.location.href = "maingroup";
         CheckPlayer(response.id, response.name, response.email, response.birthday);
         console.log('Successful login for: ' + response.name);
       });
@@ -103,8 +104,6 @@
         type: 'POST',
         data: { uid: uid, cname: cname, email: email, birthday: birthday, isFb: true },
       });
-
-      window.location.href = "maingroup";
     }
   </script>
 </head>

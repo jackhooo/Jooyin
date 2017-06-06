@@ -12,11 +12,42 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
   var isFb = req.body.isFb;
+
   //if (req.body.isFb == true) {isFb = true;}
   //console.log(req.body.isFb);
   var db = pool;
   //var data = "";
-  if (isFb == null) {
+  if(isFb) {
+    console.log(req.body.cname);
+    var userid = req.body.uid;
+    var filter = "";
+    if (userid) { filter = 'WHERE email = ?'; }
+    db.query('SELECT * FROM ac_basic ' + filter, userid, function (err, rows) {
+      if (err) { console.log(err); }
+      var data = rows;
+      //console.log(data);
+      if (rows.length === 0) {
+        var sql = {
+          email: req.body.uid,
+          sex: null,
+          nickname: req.body.cname,
+          birthday: req.body.birthday,
+          password: null
+        };
+        var qur = db.query('INSERT INTO ac_basic SET ?', sql, function (err, rows) {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+    req.session.email = req.body.uid;
+    req.session.nickname = req.body.cname;
+    req.session.password = null;
+    req.session.logined = true;
+    res.redirect('../maingroup');
+  }
+  else {
     //console.log("hi");
     var userName = req.body.email;
     var filter = "";
@@ -48,36 +79,7 @@ router.post('/', function (req, res, next) {
       }
     });
   }
-  else {
-    //console.log("hi");
-    var userid = req.body.uid;
-    var filter = "";
-    if (userid) { filter = 'WHERE email = ?'; }
-    db.query('SELECT * FROM ac_basic ' + filter, userid, function (err, rows) {
-      if (err) { console.log(err); }
-      var data = rows;
-      //console.log(data);
-      if (rows.length === 0) {
-        var sql = {
-          email: req.body.uid,
-          sex: null,
-          nickname: req.body.cname,
-          birthday: req.body.birthday,
-          password: null
-        };
-        var qur = db.query('INSERT INTO ac_basic SET ?', sql, function (err, rows) {
-          if (err) {
-            console.log(err);
-          }
-        });
-      }
-    });
-    req.session.email = req.body.uid;
-    req.session.nickname = req.body.cname;
-    req.session.password = null;
-    req.session.logined = true;
-    res.redirect('../maingroup');
-  }
+  
 });
 
 /* 使用者登出頁面. */

@@ -42,6 +42,7 @@
         type: "POST",
         dateType: 'html',
         data: {  
+          formatted_address: results[0].formatted_address,
           position_lat: markers[0].position.lat(),
            position_lng: markers[0].position.lng(),
            group_name: document.send.group_name.value,
@@ -95,10 +96,13 @@ function initialize() {
           handleLocationError(false, infoWindow, map.getCenter());
         }
 
-
+var count = 0;
   // This event listener calls addMarker() when the map is clicked.
   google.maps.event.addListener(map, 'click', function(event) {
+    if(count == 0){
     addMarker(event.latLng, map);
+    count++;
+  }
   });
 
 
@@ -109,33 +113,7 @@ function initialize() {
 }
 
 var markers = [];
-
-function Submit() {
-      console.log(markers[0].position.lat());
-      console.log(markers[0].position.lng());
-      
-      $.ajax({
-        url: "/newgroup/creatgroup",
-        type: "POST",
-        dateType: 'html',
-        data: {  
-          position_lat: markers[0].position.lat(),
-           position_lng: markers[0].position.lng(),
-           group_name: document.send.group_name.value,
-          start_date: document.send.start_date.value,
-           end_date: document.send.end_date.value,
-          start_time: document.send.start_time.value,
-           end_time: document.send.end_time.value,
-          sports_category: document.send.sports_category.value,
-           group_people: document.send.group_people.value,
-          group_location: document.send.group_location.value,
-           detail: document.send.detail.value,
-           },
-      });
-
-      window.location.href = "maingroup";
-    }
-
+var results = [];
 // Adds a marker to the map.
 function addMarker(location, map) {
   geocoder = new google.maps.Geocoder();
@@ -153,32 +131,32 @@ function addMarker(location, map) {
 
   markers.push(marker);
   // 將經緯度透過 Google map API 反查地址
-  
 
-  // geocoder.geocode({
-  //   'latLng': location
-  // }, function(results, status) {
-  //   if (status == google.maps.GeocoderStatus.OK) {
-  //     if (results) {
-  //       showAddressOfResult(results[0], marker);
-  //     }
-  //   } else {
-  //     alert("Reverse Geocoding failed because: " + status);
-  //   }
-  // });
+
+  geocoder.geocode({
+    'latLng': location
+  }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results) {
+        showAddressOfResult(results[0], marker);
+      }
+    } else {
+      alert("Reverse Geocoding failed because: " + status);
+    }
+  });
 
 };
 
     // 設定 marker 的訊息泡泡
 
-    // function showAddressOfResult(result, marker) {
-    //   popup = new google.maps.InfoWindow();
-    //  // map.setCenter(marker.getPosition());
-
-    //   var popupContent = '<b>地址: </b> ' + result.formatted_address;
-    //   popup.setContent(popupContent);
-    //   popup.open(map, marker);
-    // }
+    function showAddressOfResult(result, marker) {
+      popup = new google.maps.InfoWindow();
+     // map.setCenter(marker.getPosition());
+      results.push(result);
+      var popupContent = '<b>地址: </b> ' + result.formatted_address;
+      popup.setContent(popupContent);
+      popup.open(map, marker);
+    }
 
 
 
