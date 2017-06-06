@@ -103,6 +103,7 @@
         dateType: 'html',
         type: 'POST',
         data: { uid: uid, cname: cname, email: email, birthday: birthday, isFb: true },
+        success: function(msg) {window.location.href = "maingroup";}
       });
     }
   </script>

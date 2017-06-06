@@ -45,7 +45,8 @@ router.post('/', function (req, res, next) {
     req.session.nickname = req.body.cname;
     req.session.password = null;
     req.session.logined = true;
-    res.redirect('../maingroup');
+    res.send('hi');
+    //res.redirect('../maingroup');
   }
   else {
     //console.log("hi");
