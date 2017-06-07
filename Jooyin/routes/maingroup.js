@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
 			}
 			myGroup_data = rows;
 
-			console.log(myGroup_data);
+			//console.log(myGroup_data);
 
 
 			res.render('maingroup', {
