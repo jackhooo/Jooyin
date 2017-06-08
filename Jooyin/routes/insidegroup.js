@@ -19,7 +19,7 @@ router.get('/',function(req, res, next) {
 			console.log(err);
 		}
 		var data = rows;
-		console.log(data);
+		//console.log(data);
 
 
 		db.query('SELECT * FROM group_with_user, agroup WHERE group_with_user.user_name = ? and group_with_user.group_id = agroup.id', res.locals.nickname, function(err, rows) {
@@ -29,7 +29,7 @@ router.get('/',function(req, res, next) {
 			}
 			myGroup_data = rows;
 
-			console.log(myGroup_data);
+		//	console.log(myGroup_data);
 
 			res.render('insidegroup', {
 				data : data,
@@ -61,5 +61,24 @@ router.get('/join', function(req, res, next) {
 
 
 });
+
+router.get('/quit', function(req, res, next) {
+
+	var group_id = req.query.group_id;
+	var user_name = req.session.nickname;
+	var db = pool;
+
+	var sql = [ user_name, group_id];
+	var qur = db.query('DELETE FROM group_with_user WHERE user_name = ? and group_id = ? ', sql,function(err, rows2) {
+		if (err) {
+			console.log(err);
+		}
+		res.redirect('/insidegroup?group_id='+ group_id);
+	});
+
+
+});
+
+
 
 module.exports = router;
