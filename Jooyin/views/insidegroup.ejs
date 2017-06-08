@@ -1,35 +1,58 @@
 <html>
+
 <head>
 	<title>JooyIn---歡樂打全場play</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+	<meta property="og:url" content="" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Jooyin" />
+	<meta property="og:description" content="時間一到我們場上見" />
+	<meta property="og:image" content="https://commons.wikimedia.org/wiki/Sport#/media/File:272-foto-de-snowboard.jpg" />
+
 	<link rel="stylesheet" href="assets/css/main.css" />
 
-	 <style type="text/css">
-   #map {
-    height: 300px;
-  }
-</style>
+	<style type="text/css">
+		#map {
+			height: 300px;
+		}
+	</style>
 	<script>
-      function initMap() {
-        var uluru = {lat: <%= data[0].position_lat%>, lng: <%= data[0].position_lng %>};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 16,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBnXcXIxzWVRLkd0MNuwsUI0eLG--QBYI&callback=initMap">
-    </script>
-		<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
-		<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+		function initMap() {
+			var uluru = { lat: <%= data[0].position_lat %>, lng: <%= data[0].position_lng %>};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 16,
+				center: uluru
+			});
+			var marker = new google.maps.Marker({
+				position: uluru,
+				map: map
+			});
+		}
+	</script>
+
+	<script>
+		(function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.9&appId=432706907105243";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+
+        // document.getElementById('share').style.data-href = "https://tw.yahoo.com/";
+	</script>
+
+
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBnXcXIxzWVRLkd0MNuwsUI0eLG--QBYI&callback=initMap">
+
+	</script>
+	<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+	<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 
 </head>
+
 <body>
 
 	<!-- Wrapper -->
@@ -64,21 +87,27 @@
 					<!-- 運動性質 -->
 					<div class="2u 12u$(small)">
 						<div class="box" id="sportstyle">
-							<h2><%= data[0].sports_category  %></h2>
+							<h2>
+								<%= data[0].sports_category  %>
+							</h2>
 						</div>
 					</div>
 
 					<!-- 運動地區 -->
 					<div class="4u 12u$(small)">
 						<div class="box" id="location">
-							<h2> <%= data[0].group_location  %></h2>
+							<h2>
+								<%= data[0].group_location  %>
+							</h2>
 						</div>
 					</div>
 
 					<!-- 揪團名稱 -->
 					<div class="6u 12u$(small)">
 						<div class="box" id="groupname">
-							<h2> <%= data[0].group_name  %></h2>
+							<h2>
+								<%= data[0].group_name  %>
+							</h2>
 						</div>
 					</div>
 
@@ -90,119 +119,132 @@
 							<h2 id="sportstyle">-參加成員-</h2>
 							<div class="row ">
 								<% for ( var i = 0  ; i <data.length ; i++){ %>
-								<div class="2u 12u$(small)">
-									<a href="" class=""><img src="images/boy.svg" alt="" /></a>
-								</div>
-								<h3><%= data[i].user_name  %></h3>
-								<% } %>
+									<div class="2u 12u$(small)">
+										<a href="" class=""><img src="images/boy.svg" alt="" /></a>
+									</div>
+									<h3>
+										<%= data[i].user_name  %>
+									</h3>
+									<% } %>
 
 							</div>
 						</div>
 						<div class="4u 12u$(small)">
 							<div class="row">
 								<div class="6u 12u$(small)">
-									<h3><%= data[0].group_name  %></h3>
-									<h3><%= data[0].start_datetime  %></h3>
-										<h3><%= data[0].end_datetime  %></h3>
-										<h3><%= data[0].formatted_address  %></h3>
-										</div>
-										<div class="6u 12u$(small)">
-											<ul class="actions">
-												<li><a href="#" class="button special">分享活動</a></li>
-												<li><br></li>
-												<li><a href="/insidegroup/quit?group_id=<%= data[0].id %>" class="button">離開揪團</a></li>
-											</ul>
-										</div>
-									</div>
-									<div id="map"></div>
+									<h3>
+										<%= data[0].group_name  %>
+									</h3>
+									<h3>
+										<%= data[0].start_datetime  %>
+									</h3>
+									<h3>
+										<%= data[0].end_datetime  %>
+									</h3>
+									<h3>
+										<%= data[0].formatted_address  %>
+									</h3>
+								</div>
+								<div class="6u 12u$(small)">
+									<ul class="actions">
+										<!--<li><a href="#" class="button special">分享活動</a></li>-->
+										<div class="fb-share-button" data-href="" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+											<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">分享</a></div>
+										<li><br></li>
+										<li><a href="/insidegroup/quit?group_id=<%= data[0].id %>" class="button">離開揪團</a></li>
+									</ul>
 								</div>
 							</div>
+							<div id="map"></div>
 						</div>
-						<!--box-->
-						<!--Chat Message Box-->
-						<div class="box">
-							<div class="row ">
-								<div class="12u$">
-									<div  id="message_block" rows="6">
-										<ul id="messages"></ul>
-		  							<div>
-											<div class="input-group">
-										      <input type="text" id="m" autocomplete="off" class="form-control" placeholder="輸入訊息...">
-													<br />
-													<span class="input-group-addon">
-										      	<button  id="send" class="create-acc">Send</button>
-													</span>
-    									</div>
-										</div>
-									</div>
-								</div><br>
-							</div>
-						</div>
-						<hr>
-
-
-						<footer id="footer">
-							<h3 id="icons">聯絡我們</h3>
-							<p id="icons"> Email:XXXXXXXXX@nccu.edu.tw Tel:XX-XXXXXXXX 地址：政治大學大仁樓</p>
-							<ul class="icons" id="icons">
-								<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-							</ul>
-						</footer>
 					</div>
 				</div>
+				<!--box-->
+				<!--Chat Message Box-->
+				<div class="box">
+					<div class="row ">
+						<div class="12u$">
+							<div id="message_block" rows="6">
+								<ul id="messages"></ul>
+								<div>
+									<div class="input-group">
+										<input type="text" id="m" autocomplete="off" class="form-control" placeholder="輸入訊息...">
+										<br />
+										<span class="input-group-addon">
+										      	<button  id="send" class="create-acc">Send</button>
+													</span>
+									</div>
+								</div>
+							</div>
+						</div><br>
+					</div>
+				</div>
+				<hr>
 
-				<!-- 側欄 -->
-				<%- include sidebar.ejs %>
 
+				<footer id="footer">
+					<h3 id="icons">聯絡我們</h3>
+					<p id="icons"> Email:XXXXXXXXX@nccu.edu.tw Tel:XX-XXXXXXXX 地址：政治大學大仁樓</p>
+					<ul class="icons" id="icons">
+						<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+					</ul>
+				</footer>
 			</div>
-			 <!-- Scripts -->
-			 <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
-			 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-			 <script src="/socket.io/socket.io.js"></script>
- 			 <script src="assets/js/jquery.min.js"></script>
- 			 <script src="assets/js/skel.min.js"></script>
- 			 <script src="assets/js/util.js"></script>
- 			 <script src="assets/js/main.js"></script>
-			 <script>
-					 var socket = io.connect('http://localhost:3000');
+		</div>
 
-					 $(document).ready(function(){
-						//  var name = prompt("請輸入暱稱","guest");
-						 var name = <%= nickname%>;
-						 if(name=="" || name==null){
-							 name = "guest";
-						 }
-						 //tell server
-						 socket.emit("add user",name);
-						 //監聽新訊息事件
-						 socket.on('chat message', function(data){
-							 appendMessage(data.username+":"+data.msg);
-						 });
-						 socket.on('add user',function(data){
-							 appendMessage(data.username+"已加入");
-						 });
-						 socket.on('user left',function(data){
-							 appendMessage(data.username+"已離開");
-						 });
-						 $('#send').click(function(){
-							 var text = $('#m').val();
-							 socket.emit('chat message', text);
-							 $('#m').val('');
-							 return false;
-						 });
-						 $("#m").keydown(function(event){
-							 if ( event.which == 13 ){
-								 $('#send').click();
-							 }
-						 });
-						 function appendMessage(msg){
-							 $('#messages').append($('<li>').text(msg));
-							 var message = document.getElementById("message_block");
-							 message.scrollTop = message.scrollHeight;
-						 }
-					 });
-			</script>
-		  </body>
-		  </html>
+		<!-- 側欄 -->
+		<%- include sidebar.ejs %>
+
+	</div>
+	<!-- Scripts -->
+	<!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		var socket = io.connect('http://localhost:3000');
+
+		$(document).ready(function () {
+			//  var name = prompt("請輸入暱稱","guest");
+			var name = <%= nickname%>;
+			if (name == "" || name == null) {
+				name = "guest";
+			}
+			//tell server
+			socket.emit("add user", name);
+			//監聽新訊息事件
+			socket.on('chat message', function (data) {
+				appendMessage(data.username + ":" + data.msg);
+			});
+			socket.on('add user', function (data) {
+				appendMessage(data.username + "已加入");
+			});
+			socket.on('user left', function (data) {
+				appendMessage(data.username + "已離開");
+			});
+			$('#send').click(function () {
+				var text = $('#m').val();
+				socket.emit('chat message', text);
+				$('#m').val('');
+				return false;
+			});
+			$("#m").keydown(function (event) {
+				if (event.which == 13) {
+					$('#send').click();
+				}
+			});
+			function appendMessage(msg) {
+				$('#messages').append($('<li>').text(msg));
+				var message = document.getElementById("message_block");
+				message.scrollTop = message.scrollHeight;
+			}
+		});
+	</script>
+</body>
+
+</html>
