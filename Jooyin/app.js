@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
+var socket = require('socket.io');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -17,8 +18,7 @@ var newgroup = require('./routes/newgroup');
 var signupPage = require('./routes/signupPage');
 var homepage = require('./routes/homepage');
 
-
-// DataBase 
+// DataBase
 var mysql = require("mysql");
 
 var con = mysql.createConnection({
@@ -72,16 +72,13 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
-
 module.exports = app;

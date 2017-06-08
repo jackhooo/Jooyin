@@ -1,11 +1,10 @@
 <html>
-
 <head>
 	<title>JooyIn---歡樂打全場play</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="assets/css/main.css" />
-	
+
 	 <style type="text/css">
    #map {
     height: 300px;
@@ -27,10 +26,10 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBnXcXIxzWVRLkd0MNuwsUI0eLG--QBYI&callback=initMap">
     </script>
+		<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+		<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
 
 </head>
-
-
 <body>
 
 	<!-- Wrapper -->
@@ -57,8 +56,6 @@
 						<li><a href="loginPage" class=""><span class="label">登入</span></a></li>
 					</ul>
 				</header>
-
-
 				<br>
 
 				<!-- 揪團布條 -->
@@ -102,7 +99,6 @@
 							</div>
 						</div>
 						<div class="4u 12u$(small)">
-						
 							<div class="row">
 								<div class="6u 12u$(small)">
 									<h3><%= data[0].group_name  %></h3>
@@ -120,26 +116,27 @@
 									</div>
 									<div id="map"></div>
 								</div>
-
 							</div>
-
-
 						</div>
 						<!--box-->
 						<!--Chat Message Box-->
-						<div class="12u$">
-							<textarea name="demo-message" id="demo-message" rows="6" readonly="value"></textarea>
-						</div><br>
-						<!--Meaasge Send Box-->
-						<div class="12u$">
-							<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="2"></textarea>
-						</div><br>
-						<!--Meaasge Button-->
-						<div class="12u$">
-							<ul class="actions">
-								<li><input type="submit" value="Send Message" class="special" /></li>
-								<li><input type="reset" value="Reset" /></li>
-							</ul>
+						<div class="box">
+							<div class="row ">
+								<div class="12u$">
+									<div  id="message_block" rows="6">
+										<ul id="messages"></ul>
+		  							<div>
+											<div class="input-group">
+										      <input type="text" id="m" autocomplete="off" class="form-control" placeholder="輸入訊息...">
+													<br />
+													<span class="input-group-addon">
+										      	<button  id="send" class="create-acc">Send</button>
+													</span>
+    									</div>
+										</div>
+									</div>
+								</div><br>
+							</div>
 						</div>
 						<hr>
 
@@ -153,22 +150,59 @@
 								<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
 							</ul>
 						</footer>
-
-
 					</div>
 				</div>
 
 				<!-- 側欄 -->
 				<%- include sidebar.ejs %>
-				
+
 			</div>
+			 <!-- Scripts -->
+			 <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
+			 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+			 <script src="/socket.io/socket.io.js"></script>
+ 			 <script src="assets/js/jquery.min.js"></script>
+ 			 <script src="assets/js/skel.min.js"></script>
+ 			 <script src="assets/js/util.js"></script>
+ 			 <script src="assets/js/main.js"></script>
+			 <script>
+					 var socket = io.connect('http://localhost:3000');
 
-			<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-		</body>
-
-		</html>
+					 $(document).ready(function(){
+						//  var name = prompt("請輸入暱稱","guest");
+						 var name = <%= nickname%>;
+						 if(name=="" || name==null){
+							 name = "guest";
+						 }
+						 //tell server
+						 socket.emit("add user",name);
+						 //監聽新訊息事件
+						 socket.on('chat message', function(data){
+							 appendMessage(data.username+":"+data.msg);
+						 });
+						 socket.on('add user',function(data){
+							 appendMessage(data.username+"已加入");
+						 });
+						 socket.on('user left',function(data){
+							 appendMessage(data.username+"已離開");
+						 });
+						 $('#send').click(function(){
+							 var text = $('#m').val();
+							 socket.emit('chat message', text);
+							 $('#m').val('');
+							 return false;
+						 });
+						 $("#m").keydown(function(event){
+							 if ( event.which == 13 ){
+								 $('#send').click();
+							 }
+						 });
+						 function appendMessage(msg){
+							 $('#messages').append($('<li>').text(msg));
+							 var message = document.getElementById("message_block");
+							 message.scrollTop = message.scrollHeight;
+						 }
+					 });
+			</script>
+		  </body>
+		  </html>
