@@ -2308,8 +2308,6 @@
 	}
 
 	input[type="text"],
-	input[type="date"],
-	input[type="time"],
 	input[type="password"],
 	input[type="email"],
 	input[type="tel"],
@@ -2334,8 +2332,6 @@
 	}
 
 		input[type="text"]:invalid,
-		input[type="date"]:invalid,
-		input[type="time"]:invalid,
 		input[type="password"]:invalid,
 		input[type="email"]:invalid,
 		input[type="tel"]:invalid,
@@ -2347,8 +2343,6 @@
 		}
 
 		input[type="text"]:focus,
-		input[type="date"]:focus,
-		input[type="time"]:focus,
 		input[type="password"]:focus,
 		input[type="email"]:focus,
 		input[type="tel"]:focus,
@@ -2394,8 +2388,6 @@
 		}
 
 	input[type="text"],
-	input[type="date"],
-	input[type="time"],
 	input[type="password"],
 	input[type="email"],
 	input[type="tel"],
@@ -4114,5 +4106,35 @@
 }
 
 #icons{
+    text-align: center;
+}
+
+#userinfo{
+    text-align: center;
+}
+
+#username{
+    text-align: center;
+}
+
+#joingroupinfo{
+    text-align: center;
+}
+
+#savegroupinfo{
+    text-align: center;
+}
+
+#userphoto{
+    max-width: 300px;
+    display:block;
+    margin: auto;
+}
+
+#bodyinfo{
+    text-align: center;
+}
+
+#photo_manage{
     text-align: center;
 }
