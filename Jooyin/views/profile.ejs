@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>JooyIn---個人資料</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="homePage" class="logo"><strong>JooyIn</strong> 揪運</a>
+									
+                                    <!-- Search -->
+								    <section id="search" class="alt">
+									   <form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									   </form>
+								    </section>
+                                    
+
+                                    
+                                    
+
+                                    <ul class="icons">
+										<li><a href="maingroup" class=""><span class="label">揪團首頁</span></a></li>
+										
+                                        <% if(nickname && logined) {%>
+                                            <li><a href="/loginPage/signout" class="" ><span class="label">登出</span></a></li>
+                                        <% }else {%>
+                                                <li><a href="loginPage" class=""><span class="label">登入</span></a></li>
+                                        <% } %>
+                                        </ul>
+								</header>	
+                            
+                            <br>  
+                            
+                            
+                            
+                            <div class="row ">
+                
+                                <div class="4u 12u$(small)"> 
+                                        
+                                    <img id ="userphoto" src=<%= "images/user_image/"+nickname %> >
+                                    
+                                    <h1 name="username" id="username"><%= nickname %></h1>    
+                                
+                                    <div class="box" id="userinfo">
+                                        <h3 name="times"> 參加過 <%= group_data.length %> 場揪運</h3>    
+                                        <% if(group_data.length!=0 ) {  %>
+                                            
+                                            <h3 name="nextjooyin"><a href="insidegroup?group_id=<%= group_data[0].group_id %>">
+                                            下個揪運：<%= group_data[0].group_name %>
+                                            </a></h3> 
+                                        
+                                        <% }  %>
+                                        <!--注意 看還要新增什麼資訊-->
+                                        <h3>------</h3>
+                                        <!--注意 看還要新增什麼資訊-->
+                                        
+                                    </div>
+                                    
+                                    <ul class="actions">
+								        <li><a href="profile_change" class="button special small">修改個人資料</a></li>
+								        
+				                    </ul>
+                                    
+                                </div>
+
+                                <div class="4u 12u$(small)"> 
+                                    
+                                    <div class="box" id="bodyinfo">
+                                        <h3 name="gender" id="gender">性別：</h3>
+                                        <h3 name="age">年齡：<%= user_data.birthday %></h3>
+                                        <h3 name="height">身高：<%= user_data.height %></h3>
+                                        <h3 name="weight">體重：<%= user_data.weight %></h3>
+                                        <h3 name="location">地點：<%= user_data.living_place %></h3>
+                                        <h3 name="sports">喜愛運動：<%= user_data.favor_sport_1 %>、<%= user_data.favor_sport_2 %></h3>
+                                        <h3 name="goal">目標：<%= user_data.diary %></h3>
+                                    </div>    
+                                    
+                                </div>  
+                                    
+                                 
+                                        
+                                <div class="4u 12u$(small)"> 
+                                    
+                                    <div class="box" id="joingroupinfo">
+                                        <h2>我參加的揪團</h2>                                        
+                                        <% for(var i=0; i<group_data.length; i++ ) {%>                                        
+                                            <h3><a href="insidegroup?group_id=<%= group_data[i].group_id %>"><%= group_data[i].group_name %></a></h3>
+                                        <% } %>                                        
+                                    </div>
+                                    
+                                    <div class="box" id="savegroupinfo">
+                                        <h2>我收藏的揪團</h2>                                   
+                                        <% for(var i=0; i<group_data.length; i++ ) {%>                                        
+                                            <h3><a href="insidegroup?group_id=<%= group_data[i].group_id %>"><%= group_data[i].group_name %></a></h3>
+                                        <% } %>             
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                </div>
+                            
+                            
+                            
+                            
+                            
+                           </div>    
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+			         </div>
+                </div>
+        </div>
+        
+        
+        
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+<script>
+    var tag = document.getElementById("gender");
+    var image = document.getElementById("userphoto");
+    var user_data = <%- JSON.stringify(user_data) %>;
+
+    var nickname = <%- JSON.stringify(nickname) %>;
+   // image.src = "images/t4.jpg";
+    
+    /*
+    if( user_data.sex=='M') {
+        tag.innerHTML += "男性";
+        image.src = "images/t4.jpg";
+    }
+    else {
+        tag.innerHTML +="女性";
+        image.src = "images/t8.jpg";
+    }
+    */
+</script>

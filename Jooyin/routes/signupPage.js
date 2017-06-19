@@ -23,25 +23,28 @@ router.post('/', function(req, res, next) {
         	res.locals.error = '此email已經被註冊過!!';
         	res.render('signupPage');
         }
-        else{
+        else{	
+			var fs = require('fs');
+			fs.writeFileSync('./public/images/user_image/'+req.body.nickname, fs.readFileSync('./public/images/user_image/female'));
+
         	var sql = {
         			email : req.body.email,
         			sex : req.body.sex,
         			nickname : req.body.nickname,
         			birthday : req.body.birthday,
         			password : req.body.password
-        		};
-        		var qur = db.query('INSERT INTO ac_basic SET ?', sql, function(err, rows) {
-        			if (err) {
-        				console.log(err);
-        			}
-        			req.session.email = req.body.email;
-        			req.session.nickname = req.body.nickname;
-        			req.session.password = req.body.password;
-        			req.session.logined = true;
-        			res.setHeader('Content-Type', 'application/json');
-        			res.redirect('../maingroup');
-        		});
+			};
+			var qur = db.query('INSERT INTO ac_basic SET ?', sql, function(err, rows) {
+				if (err) {
+					console.log(err);
+				}
+				req.session.email = req.body.email;
+				req.session.nickname = req.body.nickname;
+				req.session.password = req.body.password;
+				req.session.logined = true;
+				res.setHeader('Content-Type', 'application/json');
+				res.redirect('../maingroup');
+			});
         }
     });
 });

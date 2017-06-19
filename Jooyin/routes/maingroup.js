@@ -39,7 +39,6 @@ router.get('/', function(req, res, next) {
 			myGroup_data = rows;
 
 			//console.log(myGroup_data);
-			myGroup_data.splice(3, Number.MAX_VALUE);
 
 			res.render('maingroup', {
 				data : data,
@@ -91,7 +90,6 @@ router.post('/', function(req, res, next) {
 			myGroup_data = rows;
 
 			//console.log(myGroup_data);
-			myGroup_data.splice(3, Number.MAX_VALUE);
 
 			res.render('maingroup', {
 				data : data,

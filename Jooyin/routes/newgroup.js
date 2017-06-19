@@ -4,8 +4,25 @@ var pool = require('./lib/db.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('newgroup', {
-		title : 'Expresss'
+
+	res.locals.nickname = req.session.nickname;
+	res.locals.logined = req.session.logined ;
+	var db = pool;
+
+	db.query('SELECT * FROM group_with_user, agroup WHERE group_with_user.user_name = ? and group_with_user.group_id = agroup.id', res.locals.nickname, function(err, rows) {
+
+		if (err) {
+			console.log(err);
+		}
+		var myGroup_data = rows;
+
+		console.log(myGroup_data);
+
+
+		res.render('newgroup', {
+			title : 'Expresss',
+			myGroup_data : myGroup_data
+		});
 	});
 });
 

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>JooyIn---修改個人資料</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="homePage/homePage.html" class="logo"><strong>JooyIn</strong> 揪運</a>
+									
+                                    <!-- Search -->
+								    <section id="search" class="alt">
+									   <form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									   </form>
+								    </section>                                
+                                    
+
+                                    <ul class="icons">
+										<li><a href="maingroup" class=""><span class="label">揪團首頁</span></a></li>
+										<li><a href="profile" class=""><span class="label">個人資訊</span></a></li>
+                                        </ul>
+								</header>	
+                            
+                            <br>  
+                            
+                            
+                                <h2>修改個人資料</h2>
+								<form method="post" action="/profile_change/change" enctype="multipart/form-data">
+                                    <div class="row">
+									
+                                        
+                                        <div class="6u 12u$(xsmall)">
+								            <input type="text" name="height" id="height" value="<%= user_data.height %>" placeholder="身高（公分）" />
+								            
+                                            <br>
+                                            
+								            <input type="text" name="weight" id="weight" value="<%= user_data.weight %>" placeholder="體重（公斤）" />
+                                            
+                                            <br>
+                                            
+								            <input type="text" name="spot" id="spot" value="<%= user_data.living_place %>" placeholder="運動/居住地點（例：台北市文山區）" />
+                                            
+                                            <br>
+                                            
+								            <div class="select-wrapper">
+                                                    <select name="like_sport1" id="like_sport1" >
+                                                        <option value="尚未填寫" id="尚未填寫1">喜愛運動（一）</option>
+                                                        <option value="健身" id="健身1">健身</option>
+                                                        <option value="籃球" id="籃球1">籃球</option>
+                                                        <option value="排球" id="排球1">排球</option>
+                                                        <option value="游泳" id="游泳1">游泳</option>
+                                                        <option value="慢跑" id="慢跑1">慢跑</option>
+                                                        <option value="瑜珈" id="瑜珈1">瑜珈</option>
+                                                        <option value="腳踏車" id="腳踏車1">腳踏車</option>
+                                                    </select>
+                                            </div>
+                                            
+                                            <br>
+                                            
+                                            <div class="select-wrapper">
+                                                    <select name="like_sport2" id="like_sport2">
+                                                        <option value="尚未填寫" id="尚未填寫2">喜愛運動（二）</option>
+                                                        <option value="健身" id="健身2">健身</option>
+                                                        <option value="籃球" id="籃球2">籃球</option>
+                                                        <option value="排球" id="排球2">排球</option>
+                                                        <option value="游泳" id="游泳2">游泳</option>
+                                                        <option value="慢跑" id="慢跑2">慢跑</option>
+                                                        <option value="瑜珈" id="瑜珈2">瑜珈</option>
+                                                        <option value="腳踏車" id="腳踏車2">腳踏車</option>
+                                                    </select>
+                                            </div>
+											<script> 
+												var userdata = <%- JSON.stringify(user_data) %>;
+												document.getElementById(userdata.favor_sport_1+"1").selected = "selected";
+												document.getElementById(userdata.favor_sport_2+"2").selected = "selected";
+											</script>
+
+                                            <br>
+											<textarea type="text" name="goal" id="goal" value="" placeholder="期許與目標"  ><%= user_data.diary %></textarea>
+                                            
+								        </div>
+                                        
+                                        
+                                        <div class="6u 12u$(small)"> 
+                                        
+                                            <img id ="userphoto" src=<%= "images/user_image/"+nickname %>>
+                                        
+                                            <br>
+                                            
+												<ul class="actions" id="photo_manage">
+													<li><input type="file" name="uploadingFile" id="uploadingFile" accept="image/*" value="上傳新大頭貼" class="special" i /></li>
+													<li><input type="submit" value="刪除頭貼" class="button small" i /></li>
+												</ul>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    
+								<!-- Break -->
+								    <div class="row uniform">
+                                    		
+								    <!-- Break -->
+								        <div class="12u$">
+								          <ul class="actions">
+								            <li><input type="submit" value="確認修改" class="special"  /></li>
+								            <li><a href="profile" class="button small">取消</a></li>
+										  </ul>
+										</div>
+                                    
+                                    
+                                    </div>
+
+								</form>
+                                   
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+			         </div>
+                </div>
+        </div>
+        
+        
+        
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

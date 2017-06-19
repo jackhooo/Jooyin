@@ -1,4 +1,6 @@
 <!-- 側欄 -->
+
+
 <div id="sidebar">
 	<div class="inner">
 		<nav id="menu">
@@ -31,39 +33,39 @@
 				<label for="interest">根據我喜愛的運動</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="all" name="all">
+				<input type="checkbox" id="all" name="all" onclick = "selectSport(this.id)" checked="true">
 				<label for="all">全部</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="workout" name="workout">
+				<input type="checkbox" id="workout" name="workout" onclick = "selectSport(this.id)" checked="true">
 				<label for="workout">健身</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="basketball" name="basketball">
+				<input type="checkbox" id="basketball" name="basketball" onclick = "selectSport(this.id)" checked="true">
 				<label for="basketball">籃球</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="vollyball" name="vollyball">
-				<label for="vollyball">排球</label>
+				<input type="checkbox" id="volleyball" name="volleyball" onclick = "selectSport(this.id)" checked="true">
+				<label for="volleyball">排球</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="swim" name="swim">
+				<input type="checkbox" id="swim" name="swim" onclick = "selectSport(this.id)" checked="true">
 				<label for="swim">游泳</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="jog" name="jog">
+				<input type="checkbox" id="jog" name="jog"  onclick = "selectSport(this.id)" checked="true">
 				<label for="jog">慢跑</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="yoga" name="yoga">
+				<input type="checkbox" id="yoga" name="yoga" onclick = "selectSport(this.id)" checked="true">
 				<label for="yoga">瑜珈</label>
 			</div>
 			<div class="6u 12u$(small)">
-				<input type="checkbox" id="bike" name="bike">
+				<input type="checkbox" id="bike" name="bike" onclick = "selectSport(this.id)" checked="true">
 				<label for="bike">腳踏車</label>
 			</div>
 			<div class="3u 12u$(small)">
-				<input type="checkbox" id="other" name="other">
+				<input type="checkbox" id="other" name="other" onclick = "selectSport(this.id)" checked="true">
 				<label for="other">其他</label>
 			</div>
 		</section>
@@ -71,7 +73,7 @@
 			<header class="major">
 				<h2>參加的最近三團</h2>
 			</header>
-			<div class="mini-posts">
+			<div class="mini-posts" id="mini-posts">
 				<% for ( var i = 0  ; i <myGroup_data.length ; i++) { %>
 					<article>
 						<a href="/insidegroup?group_id=<%= myGroup_data[i].id %>" class="image"><img src="images/<%= myGroup_data[i].sports_category%>.jpg" alt="" /></a>
@@ -89,4 +91,94 @@
 		</section>
 	</div>
 </div>
+
+
+<script language = "javascript">
+	var sportsChecked = [false, false,false,false,false,false,false,false];
+	var sportsName = ["workout", "basketball", "volleyball", "swim", "jog", "yoga", "bike", "other"];
+	var allIsSelected = true;
+	var myGroup_data = <%- JSON.stringify(myGroup_data) %>;
+
+	function selectSport(id) {
+		if( id!="all") {
+			var index = findSportsIndex(id); 
+			sportsChecked[index] = !sportsChecked[index];
+
+			if( allIsSelected ) {
+				allIsSelected = false;
+				document.getElementById("all").checked = allIsSelected;
+			}
+			else {
+				var flag = true;
+				for( var i=0; i<8; i++ ) {
+					if( !sportsChecked[i] ) {
+						flag = false;
+						break;
+					}
+				}
+				if( flag ) {
+					allIsSelected = true;
+					document.getElementById("all").checked = allIsSelected;
+				}
+			}
+		}
+
+		else {
+			var flag;
+			if( allIsSelected ) flag = false;
+			else flag = true;
+
+			allIsSelected = flag;
+			for( var i=0; i<8; i++ ) {
+				sportsChecked[i] = flag;
+				document.getElementById(sportsName[i]).checked = flag;
+			}
+		}
+
+		var str="";
+		for(var i=0; i<8; i++ ){
+			if(sportsChecked[i]) str += "T ";
+			else str += "F ";
+		}
+		console.log("sportsChecked = "+str);
+
+
+		newHtml = "";
+
+		for( var i=0; i<myGroup_data.length; i++ ) {
+			var index = findSportsIndex( sportName_ChineseToEnglish(myGroup_data[i].sports_category) );
+			console.log("my group category index = "+index);
+			if( sportsChecked[index]==true ) {
+
+				newHtml += '<article><a href="/insidegroup?group_id=' + myGroup_data[i].id + '" class="image">';
+				newHtml += '<img src="images/' + myGroup_data[i].sports_category + '.jpg" alt="" /></a>';
+				newHtml += '<p><a href="/insidegroup?group_id=' + myGroup_data[i].id + '">' + myGroup_data[i].group_name + '</a></p></article>';
+				
+				console.log(myGroup_data[i]);
+			}
+		}
+		if(newHtml=="") newHtml = "No Group QAQ NowVan small GG";
+		document.getElementById("mini-posts").innerHTML = " "+newHtml;
+
+	}
+
+	function findSportsIndex(str) {
+		for( var i=0; i<8; i++ ) {
+			if( sportsName[i]==str ) return i;
+		} 
+		return -1;
+	}
+
+	function sportName_ChineseToEnglish(str) {
+		if(str=="籃球") return "basketball";
+		else if(str=="排球") return "volleyball";
+		else if(str=="健身") return "workout";
+		else if(str=="游泳") return "swim";
+		else if(str=="慢跑") return "jog";
+		else if(str=="瑜珈") return "yoga";
+		else if(str=="腳踏車") return "bike";
+		else if(str=="其他") return "other";
+	}
+
+</script>
 
