@@ -125,8 +125,8 @@ function addMarker(location, map) {
     position: location,
     label: labels[labelIndex++ % labels.length],
     map: map,
-    draggable:true,
-    title:"Drag me!"
+//    draggable:true,
+//    title:"Drag me!"
   })
 
   markers.push(marker);
@@ -296,13 +296,12 @@ function addMarker(location, map) {
     <!-- Break -->
     <div class="12u$">
       <ul class="actions">
-       <li><input type="submit" value="新增揪團"  class="special" /></li>
        <li><input type="reset" value="清除" /></li>
      </ul>
    </div>
  </div>
 </form>
-<button class="Submit" onclick="Check()">Submit</button>
+<button onclick="Check()">新增揪團</button>
 
 <hr>
 
