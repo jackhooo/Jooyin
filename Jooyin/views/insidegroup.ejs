@@ -67,7 +67,7 @@
 				<header id="header">
 					<a href="homePage" class="logo"><strong>JooyIn</strong> 揪運</a>
 
-				
+
 
 					<ul class="icons">
 						<li><a href="maingroup" class=""><span class="label">揪團</span></a></li>
@@ -212,7 +212,7 @@
 
 		$(document).ready(function () {
 			//  var name = prompt("請輸入暱稱","guest");
-			var name = <%= nickname%>;
+			var name = <%- JSON.stringify(nickname) %>;
 			if (name == "" || name == null) {
 				name = "guest";
 			}

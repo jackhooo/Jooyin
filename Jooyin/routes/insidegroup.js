@@ -2,22 +2,16 @@ var express = require('express');
 var router = express.Router();
 var pool = require('./lib/db.js');
 /* GET home page. */
-// var app = require('express')();
-//
-//
-// var http = require('http').Server(app);
-// var io = require('socket.io')(http);
 router.get('/',function(req, res, next) {
 
 	res.locals.nickname = req.session.nickname;
-	res.locals.logined = req.session.logined;
+	res.locals.logined = req.session.logined ;
+	res.locals.username = req.query.username;
 	var db = pool;
 	var data = "";
 	var group_user = "";
 	var group_id = req.query.group_id;
-
 	var data = "";
-
 	db.query('SELECT * FROM agroup ,group_with_user WHERE agroup.id = ? and agroup.id = group_with_user.group_id',group_id, function(err, rows) {
 
 		if (err) {
@@ -34,7 +28,7 @@ router.get('/',function(req, res, next) {
 		//	console.log(myGroup_data);
 			res.render('insidegroup', {
 				data : data,
-				myGroup_data : myGroup_data
+				myGroup_data : myGroup_data,
 			});
 		});
 	});
@@ -56,8 +50,6 @@ router.get('/join', function(req, res, next) {
 		}
 		res.redirect('/insidegroup?group_id='+ group_id);
 	});
-
-
 });
 
 router.get('/save', function(req, res, next) {
