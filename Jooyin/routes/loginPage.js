@@ -52,16 +52,12 @@ router.post('/', function (req, res, next) {
     // Download to a directory and save with the original filename 
     const options = {
       url: 'http://graph.facebook.com/' + req.body.uid + '/picture?type=large',
-      dest: './public/images/user_image/'           // Save to /path/to/dest/image.jpg 
+      dest: './public/images/user_image/' + req.body.cname + '.jpg'          // Save to /path/to/dest/image.jpg 
     }
 
     download.image(options)
       .then(({ filename, image }) => {
         console.log('File saved to', filename)
-        var fs = require('fs');
-        fs.rename('./public/images/user_image/picture?type=large', './public/images/user_image/' + req.body.cname, function (err) {
-          if (err) console.log('ERROR: ' + err);
-        });
       }).catch((err) => {
         throw err
       })
