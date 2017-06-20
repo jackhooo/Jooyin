@@ -17,7 +17,7 @@ router.post('/', function (req, res, next) {
   //console.log(req.body.isFb);
   var db = pool;
   //var data = "";
-  if(isFb) {
+  if (isFb) {
     console.log(req.body.cname);
     var userid = req.body.uid;
     var filter = "";
@@ -45,6 +45,27 @@ router.post('/', function (req, res, next) {
     req.session.nickname = req.body.cname;
     req.session.password = null;
     req.session.logined = true;
+
+    const download = require('image-downloader')
+
+    // Download to a directory and save with the original filename 
+    const options = {
+      url: 'http://graph.facebook.com/' + req.body.uid + '/picture?type=large',
+      dest: './public/images/user_image/' + req.body.cname + '.jpg'            // Save to /path/to/dest/image.jpg 
+    }
+
+    download.image(options)
+      .then(({ filename, image }) => {
+        console.log('File saved to', filename)
+      }).catch((err) => {
+        throw err
+      })
+
+    var fs = require('fs');
+    fs.rename('./public/images/user_image/' + req.body.cname + '.jpg'   , './public/images/user_image/' + req.body.cname, function (err) {
+      if (err) console.log('ERROR: ' + err);
+    });
+
     res.send('hi');
     //res.redirect('../maingroup');
   }
@@ -74,13 +95,14 @@ router.post('/', function (req, res, next) {
           req.session.nickname = data[0].nickname;
           req.session.password = data[0].password;
           req.session.logined = true;
+
           res.redirect('../maingroup');
         }
         return;
       }
     });
   }
-  
+
 });
 
 /* 使用者登出頁面. */
