@@ -79,7 +79,12 @@
 					</div>
 				</section>
 				<ul class="pagination">
-					<li><span class="button disabled">Prev</span></li>
+					<li><% if(page==1) { %>
+							<span class="button disabled">Prev</span>
+						<% } else { %>
+							<a href="/maingroup?page=<%= parseInt(page)-1 %>" class="button">Prev</a>
+						<% } %>
+					</li>
 						<% for ( var i = 1  ; i <datalength/6 + 1 ; i++){ %>
 							<% if(i == page) {%>
 								<li>
@@ -87,17 +92,22 @@
 										<%= i %>
 									</a>
 								</li>
-								<% }else{ %>
-									<li>
-										<a href="/maingroup?page=<%= i %>" class="page">
-											<%= i %>
-										</a>
-									</li>
-									<% } %>
+							<% }else{ %>
+								<li>
+									<a href="/maingroup?page=<%= i %>" class="page">
+										<%= i %>
+									</a>
+								</li>
+							<% } %>
 
-										<% } %>
-											<li><a href="#" class="button">Next</a></li>
-											<!-- </ul>         -->
+						<% } %>
+					<li><% if(page>datalength/6) { %>
+							<span class="button disabled">Next</span>
+						<% } else { %>
+							<a href="/maingroup?page=<%= parseInt(page)+1 %>" class="button">Next</a>
+						<% } %>
+					</li>
+				</ul>         
 			</div>
 
 			<hr>
