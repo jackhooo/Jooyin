@@ -60,6 +60,25 @@ router.get('/join', function(req, res, next) {
 
 });
 
+router.get('/save', function(req, res, next) {
+
+	var group_id = req.query.group_id;
+	var db = pool;
+
+	var sql = {
+			user_name : req.session.nickname,
+			group_id : group_id,
+	};
+	var qur = db.query('INSERT INTO group_user_save SET ?', sql,function(err, rows2) {
+		if (err) {
+			console.log(err);
+		}
+		res.redirect('/insidegroup?group_id='+ group_id);
+	});
+
+
+});
+
 router.get('/quit', function(req, res, next) {
 
 	var group_id = req.query.group_id;

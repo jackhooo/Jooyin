@@ -28,12 +28,16 @@ router.get('/', function(req, res, next) {
 
     db.query('SELECT * FROM group_with_user, agroup WHERE group_with_user.user_name = ? and group_with_user.group_id = agroup.id ORDER By start_datetime desc', res.locals.username, function(err, rows) {
       
-      res.render('profile', {
-        user_data : user_data,
-        group_data : rows,
-        isMyUser : isMyUser
-			});
-      
+      var group_data = rows;
+      db.query('SELECT * FROM group_user_save, agroup WHERE group_user_save.user_name = ? and group_user_save.group_id = agroup.id ORDER By start_datetime desc', res.locals.username, function(err, rows) {
+        
+          res.render('profile', {
+            user_data : user_data,
+            group_data : group_data,
+            save_group_data : rows, 
+            isMyUser : isMyUser
+          });
+      });
     });
   });
 });
