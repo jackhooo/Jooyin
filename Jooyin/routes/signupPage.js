@@ -25,7 +25,11 @@ router.post('/', function(req, res, next) {
         }
         else{	
 			var fs = require('fs');
-			fs.writeFileSync('./public/images/user_image/'+req.body.nickname, fs.readFileSync('./public/images/user_image/female'));
+			var sexPhoto;
+			console.log(req.body.sex);
+			if( req.body.sex == 'M' ) sexPhoto = 'man';
+			else sexPhoto = 'female';
+			fs.writeFileSync('./public/images/user_image/'+req.body.nickname, fs.readFileSync('./public/images/user_image/'+sexPhoto));
 
         	var sql = {
         			email : req.body.email,

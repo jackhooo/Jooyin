@@ -23,16 +23,6 @@
 								<header id="header">
 									<a href="homePage" class="logo"><strong>JooyIn</strong> 揪運</a>
 									
-                                    <!-- Search -->
-								    <section id="search" class="alt">
-									   <form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									   </form>
-								    </section>
-                                    
-
-                                    
-                                    
 
                                     <ul class="icons">
 										<li><a href="maingroup" class=""><span class="label">揪團首頁</span></a></li>
@@ -53,9 +43,9 @@
                 
                                 <div class="4u 12u$(small)"> 
                                         
-                                    <img id ="userphoto" src=<%= "images/user_image/"+nickname %> >
+                                    <img id ="userphoto" src=<%= "images/user_image/"+username %> >
                                     
-                                    <h1 name="username" id="username"><%= nickname %></h1>    
+                                    <h1 name="username" id="username"><%= username %></h1>    
                                 
                                     <div class="box" id="userinfo">
                                         <h3 name="times"> 參加過 <%= group_data.length %> 場揪運</h3>    
@@ -72,10 +62,12 @@
                                         
                                     </div>
                                     
-                                    <ul class="actions">
-								        <li><a href="profile_change" class="button special small">修改個人資料</a></li>
-								        
-				                    </ul>
+                                    <% if(nickname==username) { %>
+                                        <ul class="actions">
+                                            <li><a href="profile_change" class="button special small">修改個人資料</a></li>
+                                            
+                                        </ul>
+                                    <% } %>
                                     
                                 </div>
 
@@ -144,11 +136,11 @@
 	</body>
 </html>
 <script>
-    var tag = document.getElementById("gender");
-    var image = document.getElementById("userphoto");
-    var user_data = <%- JSON.stringify(user_data) %>;
+    // var tag = document.getElementById("gender");
+    // var image = document.getElementById("userphoto");
+    // var user_data = <%- JSON.stringify(user_data) %>;
 
-    var nickname = <%- JSON.stringify(nickname) %>;
+    // var nickname = <%- JSON.stringify(nickname) %>;
    // image.src = "images/t4.jpg";
     
     /*

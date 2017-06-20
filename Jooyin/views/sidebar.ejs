@@ -11,12 +11,19 @@
 					</h2>
 					<% }%>
 			</header>
-			<img src="images/boy.svg" />
-			<p class="button big" id="percent">100%</p>
-			<p class="button big" id="completetimes">34場</p>
-			<br>
-			<div class="box" id="futuregroup">
-				<p>下個揪運：明天下午三點 河堤籃球場</p>
+			<img class="image fit" src="images/user_image/<%= nickname %>" />
+			<button class="button small" id="completetimes" onclick="location.href='profile'">已完成場次：<%= myGroup_data.length %>場</button>
+			<br><br>
+			<div class="box" id="futuregroup" 
+				<% if(myGroup_data.length>0 ) { %>
+					onclick="location.href='insidegroup?group_id=<%= myGroup_data[0].group_id %>'"
+				<% } %>
+			>
+				<% if(myGroup_data.length>0 ) { %>
+					<p>下個揪運：<%= myGroup_data[0].sports_category  %>--<%= myGroup_data[0].group_name  %></p>
+				<% } else { %>
+					<p>  還沒有參加任何揪運><</p>
+				<% } %>
 			</div>
 			<div class="6u$ 12u$(small)">
 				<ul class="actions vertical small" id="logout">
@@ -74,7 +81,7 @@
 				<h2>參加的最近三團</h2>
 			</header>
 			<div class="mini-posts" id="mini-posts">
-				<% for ( var i = 0  ; i <myGroup_data.length ; i++) { %>
+				<% for ( var i = 0  ; i <myGroup_data.length&&i<3 ; i++) { %>
 					<article>
 						<a href="/insidegroup?group_id=<%= myGroup_data[i].id %>" class="image"><img src="images/<%= myGroup_data[i].sports_category%>.jpg" alt="" /></a>
 						<p><a href="/insidegroup?group_id=<%= myGroup_data[i].id %>"><%= myGroup_data[i].group_name  %></a></p>
@@ -83,11 +90,7 @@
 				<% } %>
 				
 			</div>
-
-
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
+			
 		</section>
 	</div>
 </div>
@@ -145,11 +148,12 @@
 
 		newHtml = "";
 
-		for( var i=0; i<myGroup_data.length; i++ ) {
+		var trueCount = 0;
+		for( var i=0; i<myGroup_data.length&&trueCount<3; i++ ) {
 			var index = findSportsIndex( sportName_ChineseToEnglish(myGroup_data[i].sports_category) );
 			console.log("my group category index = "+index);
 			if( sportsChecked[index]==true ) {
-
+				trueCount++;
 				newHtml += '<article><a href="/insidegroup?group_id=' + myGroup_data[i].id + '" class="image">';
 				newHtml += '<img src="images/' + myGroup_data[i].sports_category + '.jpg" alt="" /></a>';
 				newHtml += '<p><a href="/insidegroup?group_id=' + myGroup_data[i].id + '">' + myGroup_data[i].group_name + '</a></p></article>';
@@ -157,7 +161,7 @@
 				console.log(myGroup_data[i]);
 			}
 		}
-		if(newHtml=="") newHtml = "No Group QAQ NowVan small GG";
+		if(newHtml=="") newHtml = "還沒有參加的團歐><";
 		document.getElementById("mini-posts").innerHTML = " "+newHtml;
 
 	}
