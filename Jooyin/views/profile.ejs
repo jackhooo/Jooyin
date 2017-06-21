@@ -42,8 +42,13 @@
                             <div class="row ">
                 
                                 <div class="4u 12u$(small)"> 
-                                        
+                                    
                                     <img id ="userphoto" src=<%= "images/user_image/"+username+".jpg" %> >
+                                 
+                                    <script>
+                                        var name = <%- JSON.stringify(username) %>; 
+                                        document.getElementById("userphoto").setAttribute("src", "images/user_image/"+name+".jpg");
+                                    </script>
                                     
                                     <h1 name="username" id="username"><%= username %></h1>    
                                 
