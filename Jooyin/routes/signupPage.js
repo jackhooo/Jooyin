@@ -36,7 +36,12 @@ router.post('/', function(req, res, next) {
         			sex : req.body.sex,
         			nickname : req.body.nickname,
         			birthday : req.body.birthday,
-        			password : req.body.password
+        			password : req.body.password,
+					height : "尚未填寫",
+					weight : "尚未填寫",
+					living_place : "尚未填寫",
+					favor_sport_1 : "尚未填寫",
+					favor_sport_2 : "尚未填寫"
 			};
 			var qur = db.query('INSERT INTO ac_basic SET ?', sql, function(err, rows) {
 				if (err) {

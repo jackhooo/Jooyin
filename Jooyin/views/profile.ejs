@@ -74,8 +74,31 @@
                                 <div class="4u 12u$(small)"> 
                                     
                                     <div class="box" id="bodyinfo">
-                                        <h3 name="gender" id="gender">性別：</h3>
-                                        <h3 name="age">年齡：<%= user_data.birthday %></h3>
+                                        <h3 name="gender" id="gender">性別：
+                                        <% if (  user_data.sex  =='M' ) {  %>
+                                            男性
+                                        <% } else if (  user_data.sex  =='F' ) { %>
+                                            女性
+                                        <% } else { %>  
+                                            未知性別><
+                                        <% } %> </h3>
+                                        <h3 name="age" id="age">年齡：</h3>
+                                        <script>
+                                            var today = new Date();
+                                            var _birth = <%- JSON.stringify(user_data) %>.birthday;
+                                            var _date = _birth.substr(0,2);
+                                            var _month = _birth.substr(3,2);
+                                            var _year = _birth.substr(6,4);
+                                            var birthDate = new Date(_month+"-"+_date+"-"+_year);
+
+                                            var age = today.getFullYear() - birthDate.getFullYear();
+                                            var m = today.getMonth() - birthDate.getMonth();
+                                            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+                                            {
+                                                age--;
+                                            }
+                                            document.getElementById("age").innerHTML += age;
+                                        </script>
                                         <h3 name="height">身高：<%= user_data.height %></h3>
                                         <h3 name="weight">體重：<%= user_data.weight %></h3>
                                         <h3 name="location">地點：<%= user_data.living_place %></h3>
@@ -91,13 +114,19 @@
                                     
                                     <div class="box" id="joingroupinfo">
                                         <h2>我參加的揪團</h2>                                        
+                                        <% if(group_data.length==0)  { %>
+                                            <h4>還沒有參加的揪團><</h4>
+                                        <% } %>
                                         <% for(var i=0; i<group_data.length; i++ ) {%>                                        
                                             <h3><a href="insidegroup?group_id=<%= group_data[i].group_id %>"><%= group_data[i].group_name %></a></h3>
                                         <% } %>                                        
                                     </div>
                                     
                                     <div class="box" id="savegroupinfo">
-                                        <h2>我收藏的揪團</h2>                                   
+                                        <h2>我收藏的揪團</h2>                                       
+                                        <% if(group_data.length==0)  { %>
+                                            <h4>還沒有收藏的揪團><</h4>
+                                        <% } %>                            
                                         <% for(var i=0; i<save_group_data.length; i++ ) {%>                                        
                                             <h3><a href="insidegroup?group_id=<%= save_group_data[i].group_id %>"><%= save_group_data[i].group_name %></a></h3>
                                         <% } %>             
