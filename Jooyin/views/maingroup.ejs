@@ -68,8 +68,9 @@
 								<a href="/insidegroup?group_id=<%= data[i].id %>" class="image"><img src="images/<%= data[i].sports_category%>.jpg" alt="" />
 								</a>
 								<h3><%= data[i].group_name  %></h3>
-								<p>起始時間:<%= data[i].start_datetime  %></p>
-								<p>結束時間:<%= data[i].end_datetime  %></p>
+								<font size="2">起始時間:<%= data[i].start_datetime %></font><br/>
+								<font size="2">結束時間:<%= data[i].end_datetime  %></font><br/>
+								<br/>
 								<ul class="actions">
 									<li><a href="/insidegroup/join?group_id=<%= data[i].id %>" class="button">Join!</a></li>
 									<li><a href="/insidegroup/save?group_id=<%= data[i].id %>" class="button">Save</a></li>
