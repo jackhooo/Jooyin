@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
 			console.log(req.body.sex);
 			if( req.body.sex == 'M' ) sexPhoto = 'man';
 			else sexPhoto = 'female';
-			fs.writeFileSync('./public/images/user_image/'+req.body.nickname, fs.readFileSync('./public/images/user_image/'+sexPhoto));
+			fs.writeFileSync('./public/images/user_image/'+req.body.nickname+'.jpg', fs.readFileSync('./public/images/user_image/'+sexPhoto+'.jpg'));
 
         	var sql = {
         			email : req.body.email,

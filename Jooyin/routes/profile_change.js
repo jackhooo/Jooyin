@@ -39,7 +39,7 @@ router.post('/change',  function(req, res, next) {
 		var theFile = util.inspect(req.file);
 		console.log(theFile);
 		var fs = require('fs');
-		fs.rename('./public/images/user_image/tmp/'+req.file.filename, './public/images/user_image/'+res.locals.nickname, function(err) {
+		fs.rename('./public/images/user_image/tmp/'+req.file.filename, './public/images/user_image/'+res.locals.nickname+'.jpg', function(err) {
 			if ( err ) console.log('ERROR: ' + err);
 		});
 	}
